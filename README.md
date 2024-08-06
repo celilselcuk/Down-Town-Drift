@@ -8,8 +8,8 @@
 ---
 # You can customize your car for free, and soon for coins in the Avatar
 ---
-# There is a tutorial explaining the game's power-ups, controls, and aims.
+# There is a tutorial explaining the game's controls and aims.
 ---
 # Anyway, have fun!
 ---
-# Powerups are coming SOON!
+# POWERUPS are coming SOON!
