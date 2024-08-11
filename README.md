@@ -16,7 +16,6 @@ Down Town Drift
     <li><a href="#about-the-project"> ➤ About the Project </a></li>
     <li><a href="#getting-started"> ➤ Getting Started</a></li>
     <li><a href="#future-plans"> ➤ Future Plans</a></li> 
-    <li><a href="#credits"> ➤ Credits</a></li>
   </ol>
 </details>
 
@@ -37,31 +36,35 @@ In this game, the player can drive up and down to avoid incoming hazards and pic
 
 ---
 
+<!-- Getting Started -->
+<h2 id="getting-started"> :rocket: Getting Started</h2>
 
-## 📝 Overview
+📋 **Prerequisites** 📋
 
-## 🚀 Getting Started
+For this game, you will need PyGame installed. Details regarding the version will be found in `requirements.txt`. The installation will be shown below
 
-### 📋 Prerequisites 📋
-
-For this game you will need PyGame installed. Details regarding version will be found in `requirements.txt`. Installation will be shown below
-
-### 💻 Installation and Running 💻
+💻 **Installation and Running** 💻
 
  To install the game use `git clone https://github.com/CelCoding/Down-Town-Drift---Endless-Runner-Game.git` 
  
  or using gh you can use `gh repo clone CelCoding/Down-Town-Drift---Endless-Runner-Game`
  
- afterwards use `cd Down-Town-Drift---Endless-Runner-Game`
+ afterward, use `cd Down-Town-Drift---Endless-Runner-Game`
 
  ---
 
  To install the dependancies run `pip install -r requirements.txt`. 
 
- Running the game on 🪟 Windows 🪟
+ Running the game on ⬜ Windows ⬜
 
  * run the file `car_game.py` in `src` using the command `py src/car_game.py`
 
  Running the game on 🐧 Linux 🐧
 
  * run the file `car_game.py` in `src` using the command `python3 src/car_game.py`
+
+---
+<!-- Future Plans -->
+<h2 id="future-plans"> :crystal_ball: Future Plans</h2>
+
+We are hoping to develop the game by adding power-ups, new map and car designs. Also thinking considering adding some sort of neural network that can play as well.
