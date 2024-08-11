@@ -8,12 +8,12 @@ Down Town Drift
 
 ## 📖 Table of Contents 📖
 
-1. [Overview](#📝-Overview-📝)
-2. [About the Project](#🔍-About-the-Project-🔍)
-3. [Getting Started](#🚀-Getting-Started-🚀)
-   - [Prerequisites](#📋-Prerequisites-📋)
-   - [Installation](#💻-Installation-💻)
-4. [Future Plans](#🔮-Future-Plans-🔮)
+1. [Overview](#📝-overview-📝)
+2. [About the Project](#🔍-about-the-project-🔍)
+3. [Getting Started](#🚀-getting-started-🚀)
+   - [Prerequisites](#📋-prerequisites-📋)
+   - [Installation](#💻-installation-💻)
+4. [Future Plans](#🔮-future-Pplans-🔮)
 
 ---
 ## 📝 Overview 📝
