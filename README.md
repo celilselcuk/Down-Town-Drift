@@ -23,7 +23,7 @@ Down Town Drift
 ---
 
 <!-- OVERVIEW -->
-<h2 id="overview"> :book: Overview</h2>
+<h2 id="overview"> :clipboard: Overview</h2>
 
 Down Town Drift is a game that has been designed in the endless runner genre of games. For those of you who don't know, this style involves the player dodging obstacles that approach them rapidly, and to survive as long as possible while collecting bonuses along the way. Famous examples include Temple Run and Subway Surfers.
 
