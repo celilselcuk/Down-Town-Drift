@@ -1,6 +1,11 @@
 import pygame
 import random
 from pygame import mixer
+from pathlib import Path
+
+# Gets directories relative to the path of 'car_game.py' or '__file__'
+def get_relative_dir(dir: str) -> str:
+    return Path(__file__).parent.joinpath(dir)
 
 pygame.init()
 
@@ -9,23 +14,23 @@ screen = pygame.display.set_mode((600, 600))
 
 # Title and Icon
 pygame.display.set_caption("Cars!")
-icon = pygame.image.load('Menu design/001-racing-car.png')
+icon = pygame.image.load(get_relative_dir('Menu design/001-racing-car.png'))
 pygame.display.set_icon(icon)
 
 # background
-background = pygame.image.load('Menu design/background image.png')
+background = pygame.image.load(get_relative_dir('Menu design/background image.png'))
 
 # game map
-game_map = pygame.image.load('Level maps/game map.png')
+game_map = pygame.image.load(get_relative_dir('Level maps/game map.png'))
 
 #button sounds
-button_sound = mixer.Sound('Sound/button sound.wav')
-image_border_sound = mixer.Sound('Sound/image border sound.wav')
+button_sound = mixer.Sound(get_relative_dir('Sound/button sound.wav'))
+image_border_sound = mixer.Sound(get_relative_dir('Sound/image border sound.wav'))
 
 #background music
-start_screen_music = pygame.mixer.Sound('Sound/background song.wav')
-avatar_tutorial_screen_music = pygame.mixer.Sound('Sound/avatar music.mp3')
-game_screen_music = pygame.mixer.Sound('Sound/gran prix upbeat.mp3')
+start_screen_music = pygame.mixer.Sound(get_relative_dir('Sound/background song.wav'))
+avatar_tutorial_screen_music = pygame.mixer.Sound(get_relative_dir('Sound/avatar music.mp3'))
+game_screen_music = pygame.mixer.Sound(get_relative_dir('Sound/gran prix upbeat.mp3'))
 called_start = False
 called_avatar_tutorial = False
 called_game = False
@@ -45,8 +50,8 @@ hard = False
 extreme = False
 
 # general variables
-next_page_arrow = pygame.image.load('Menu design/next page arrow.png')
-go_back_arrow = pygame.image.load('Menu design/go back arrow.png')
+next_page_arrow = pygame.image.load(get_relative_dir('Menu design/next page arrow.png'))
+go_back_arrow = pygame.image.load(get_relative_dir('Menu design/go back arrow.png'))
 no_collide = True
 game_start_screen = True
 avatar_screen = False
@@ -68,11 +73,11 @@ colour_of_tank = (61, 122, 61)
 current_colour = red
 
 # Fonts and text
-my_font = pygame.font.Font('Font/BACKTO1982.TTF', 32)
+my_font = pygame.font.Font(get_relative_dir('Font/BACKTO1982.TTF'), 32)
 text_surface = my_font.render('Down Town Drift', False, (255, 255, 255))
 
-my_font_start = pygame.font.Font('Font/BACKTO1982.TTF', 20)
-small_font = pygame.font.Font('Font/BACKTO1982.TTF', 10)
+my_font_start = pygame.font.Font(get_relative_dir('Font/BACKTO1982.TTF'), 20)
+small_font = pygame.font.Font(get_relative_dir('Font/BACKTO1982.TTF'), 10)
 text_avatar = my_font_start.render('Press A to view Avatar', False, (255, 255, 255))
 
 text_tutorial = my_font_start.render('Press T to start Tutorial', False, (255, 255, 255))
@@ -92,28 +97,28 @@ tutorial_text_2 = my_font_start.render('GET COINS $$$', False, (255, 255, 255))
 
 # loading bar variables
 
-sprites = [pygame.image.load('Animation/Loading screen/pixil-frame-0.png'),
-           pygame.image.load('Animation/Loading screen/pixil-frame-1.png'),
-           pygame.image.load('Animation/Loading screen/pixil-frame-2.png'),
-           pygame.image.load('Animation/Loading screen/pixil-frame-3.png'),
-           pygame.image.load('Animation/Loading screen/pixil-frame-4.png'),
-           pygame.image.load('Animation/Loading screen/pixil-frame-5.png'),
-           pygame.image.load('Animation/Loading screen/pixil-frame-6.png'),
-           pygame.image.load('Animation/Loading screen/pixil-frame-7.png')]
+sprites = [pygame.image.load(get_relative_dir('Animation/Loading screen/pixil-frame-0.png')),
+           pygame.image.load(get_relative_dir('Animation/Loading screen/pixil-frame-1.png')),
+           pygame.image.load(get_relative_dir('Animation/Loading screen/pixil-frame-2.png')),
+           pygame.image.load(get_relative_dir('Animation/Loading screen/pixil-frame-3.png')),
+           pygame.image.load(get_relative_dir('Animation/Loading screen/pixil-frame-4.png')),
+           pygame.image.load(get_relative_dir('Animation/Loading screen/pixil-frame-5.png')),
+           pygame.image.load(get_relative_dir('Animation/Loading screen/pixil-frame-6.png')),
+           pygame.image.load(get_relative_dir('Animation/Loading screen/pixil-frame-7.png'))]
 counter = 0
 money_adder_counter = 0
-tank_sprites = [pygame.image.load('Animation/Tank/tank-frame-0.png'),
-                pygame.image.load('Animation/Tank/tank-frame-1.png')]
+tank_sprites = [pygame.image.load(get_relative_dir('Animation/Tank/tank-frame-0.png')),
+                pygame.image.load(get_relative_dir('Animation/Tank/tank-frame-1.png'))]
 tank_counter = 0
 
 # car
-red_car = pygame.image.load('Cars/red car.png')
-blue_car = pygame.image.load('Cars/blue car.png')
-green_car = pygame.image.load('Cars/green car.png')
-orange_car = pygame.image.load('Cars/orange car.png')
-purple_car = pygame.image.load('Cars/purple car.png')
-grey_car = pygame.image.load('Cars/grey car.png')
-tank = pygame.image.load('Cars/2s3m.png')
+red_car = pygame.image.load(get_relative_dir('Cars/red car.png'))
+blue_car = pygame.image.load(get_relative_dir('Cars/blue car.png'))
+green_car = pygame.image.load(get_relative_dir('Cars/green car.png'))
+orange_car = pygame.image.load(get_relative_dir('Cars/orange car.png'))
+purple_car = pygame.image.load(get_relative_dir('Cars/purple car.png'))
+grey_car = pygame.image.load(get_relative_dir('Cars/grey car.png'))
+tank = pygame.image.load(get_relative_dir('Cars/2s3m.png'))
 current_car = red_car
 car_x = 10
 car_y = 245
@@ -123,13 +128,13 @@ car_collide = False
 # shop variables:
 total_money = 0
 coins_gained = 0
-small_coin_pic = pygame.image.load("Menu design/small_coin.png")
+small_coin_pic = pygame.image.load(get_relative_dir("Menu design/small_coin.png"))
 
 # obstacle variables
-oil = pygame.image.load('Obstacles/oil leak.png')
-cone = pygame.image.load('Obstacles/cone.png')
-barrel = pygame.image.load('Obstacles/barrel.png')
-coin_pic = pygame.image.load('Obstacles/coin.png')
+oil = pygame.image.load(get_relative_dir('Obstacles/oil leak.png'))
+cone = pygame.image.load(get_relative_dir('Obstacles/cone.png'))
+barrel = pygame.image.load(get_relative_dir('Obstacles/barrel.png'))
+coin_pic = pygame.image.load(get_relative_dir('Obstacles/coin.png'))
 
 obstacle_speed = 2.4
 
@@ -162,7 +167,7 @@ class Button:
 
         if self.rect.collidepoint(pos):
             if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:
-                button_sound = mixer.Sound('Sound/button sound.wav')
+                button_sound = mixer.Sound(get_relative_dir('Sound/button sound.wav'))
                 button_sound.play()
                 self.clicked = True
                 action = True
@@ -185,7 +190,7 @@ go_back_button = Button(15, 5, go_back_arrow)
 
 
 def game_over():
-    with open('Data/highscore.txt', 'r+') as file:
+    with open(get_relative_dir('Data/highscore.txt'), 'r+') as file:
         try:
             high_score = int(file.read())
         except ValueError:
@@ -194,7 +199,7 @@ def game_over():
     death_message = my_font.render('...You Died...', False, (255, 255, 255))
     if high_score < score:
         high_score = score
-        with open('Data/highscore.txt', 'r+') as file:
+        with open(get_relative_dir('Data/highscore.txt'), 'r+') as file:
             file.write(str(high_score))
     high_score_message = my_font.render(f'High score: {str(high_score)}', False, (255, 255, 255))
     money_gained_message = my_font.render(f'Money gained: {coins_gained}', False, (255, 255, 255))
@@ -403,13 +408,13 @@ def avatar():
 
     global total_money
 
-    with open('Data/user_money.txt', 'r+') as file:
+    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
         try:
             final_money = int(file.read())
         except ValueError:
             final_money = 0
 
-    with open('Data/user_money.txt', 'r+') as file:
+    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
         final_money += total_money
         file.write(str(final_money))
 
@@ -445,13 +450,13 @@ def avatar_page_2():
 
     global total_money
 
-    with open('Data/user_money.txt', 'r+') as file:
+    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
         try:
             final_money = int(file.read())
         except ValueError:
             final_money = 0
 
-    with open('Data/user_money.txt', 'r+') as file:
+    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
         final_money += total_money
         file.write(str(final_money))
 
