@@ -42,8 +42,26 @@ In this game, the player can drive up and down to avoid incoming hazards and pic
 
 ## 🚀 Getting Started
 
-### - 📋 Prerequisites
+### 📋 Prerequisites 📋
 
-### - 💻 Installation
+For this game you will need PyGame installed. Details regarding version will be found in `requirements.txt`. Installation will be shown below
 
-## 🔮 Future Plans
+### 💻 Installation and Running 💻
+
+ To install the game use `git clone https://github.com/CelCoding/Down-Town-Drift---Endless-Runner-Game.git` 
+ 
+ or using gh you can use `gh repo clone CelCoding/Down-Town-Drift---Endless-Runner-Game`
+ 
+ afterwards use `cd Down-Town-Drift---Endless-Runner-Game`
+
+ ---
+
+ To install the dependancies run `pip install -r requirements.txt`. 
+
+ Running the game on 🪟 Windows 🪟
+
+ * run the file `car_game.py` in `src` using the command `py src/car_game.py`
+
+ Running the game on 🐧 Linux 🐧
+
+ * run the file `car_game.py` in `src` using the command `python3 src/car_game.py`
