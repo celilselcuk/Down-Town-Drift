@@ -188,19 +188,25 @@ grey_car_button = Button(400, 400, grey_car)
 next_page_button = Button(480, 9, next_page_arrow)
 go_back_button = Button(15, 5, go_back_arrow)
 
+def update_highscore():
 
-def game_over():
     with open(get_relative_dir('Data/highscore.txt'), 'r+') as file:
         try:
             high_score = int(file.read())
         except ValueError:
             high_score = 0
 
-    death_message = my_font.render('...You Died...', False, (255, 255, 255))
     if high_score < score:
         high_score = score
         with open(get_relative_dir('Data/highscore.txt'), 'r+') as file:
             file.write(str(high_score))
+
+def game_over():
+    global high_score
+
+    update_highscore()
+    #screen text   
+    death_message = my_font.render('...You Died...', False, (255, 255, 255))
     high_score_message = my_font.render(f'High score: {str(high_score)}', False, (255, 255, 255))
     money_gained_message = my_font.render(f'Money gained: {coins_gained}', False, (255, 255, 255))
     screen.blit(death_message, (50, 50))
@@ -406,20 +412,6 @@ def tutorial():
 
 def avatar():
 
-    global total_money
-
-    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
-        try:
-            final_money = int(file.read())
-        except ValueError:
-            final_money = 0
-
-    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
-        final_money += total_money
-        file.write(str(final_money))
-
-    total_money = 0
-
     # title
     pygame.draw.rect(screen, black, pygame.Rect(190, 27, 202, 57))
     pygame.draw.rect(screen, purple, pygame.Rect(190, 27, 202, 57), 4)
@@ -448,19 +440,6 @@ def avatar():
 
 def avatar_page_2():
 
-    global total_money
-
-    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
-        try:
-            final_money = int(file.read())
-        except ValueError:
-            final_money = 0
-
-    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
-        final_money += total_money
-        file.write(str(final_money))
-
-    total_money = 0
     # title
     pygame.draw.rect(screen, black, pygame.Rect(190, 27, 202, 57))
     pygame.draw.rect(screen, purple, pygame.Rect(190, 27, 202, 57), 4)
@@ -482,6 +461,20 @@ def avatar_page_2():
     total_money_message = my_font_start.render(f' {final_money}', False, (255, 255, 255))
     screen.blit(total_money_message, (90, 145))
 
+def update_money():
+    global total_money, final_money, coins_gained
+    
+    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
+        try:
+            final_money = int(file.read())
+        except ValueError:
+            final_money = 0
+
+    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
+        final_money += total_money
+        file.write(str(final_money))
+
+    total_money = 0
 
 running = True
 while running:
@@ -489,6 +482,8 @@ while running:
     screen.blit(background, (0, 0))
 
     if game_start_screen:
+        update_money()
+        update_highscore()
         start_screen()
         if not called_start:
            avatar_tutorial_screen_channel.fadeout(500)
@@ -500,6 +495,7 @@ while running:
 
 
     if avatar_screen:
+        update_money()
         avatar()
         if not called_avatar_tutorial:
            start_screen_channel.fadeout(500)
@@ -510,6 +506,7 @@ while running:
            called_start = False
 
     if tutorial_screen:
+        update_money()
         tutorial()
         if not called_avatar_tutorial:
            start_screen_channel.fadeout(500)
@@ -520,6 +517,8 @@ while running:
            called_start = False
 
     if game_screen:
+        update_money()
+        update_highscore()
         game()
         if not called_game:
            start_screen_channel.fadeout(500)
@@ -596,6 +595,7 @@ while running:
             avatar_screen_two = True
 
     if avatar_screen_two:
+        update_money()
         avatar_page_2()
         if tank_button.draw():
             current_car = tank
