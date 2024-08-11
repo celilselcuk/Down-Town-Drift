@@ -29,6 +29,8 @@ For this game you will need PyGame installed. Details regarding version will be 
 
 ### 💻 Installation and Running 💻
 
+ To install the game use `git clone https://github.com/CelCoding/Down-Town-Drift---Endless-Runner-Game.git` or using gh you can use `gh repo clone CelCoding/Down-Town-Drift---Endless-Runner-Game`
+
  To install the dependancies run `pip install -r requirements.txt`. 
 
  Running the game on 🪟 Windows 🪟
