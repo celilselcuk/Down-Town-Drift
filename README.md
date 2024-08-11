@@ -1,15 +1,15 @@
 # Down-Town-Drift
 ---
-# This game is an endless runner-style game.
+ This game is an endless runner-style game.
 ---
-# You control a car and can move it up or down to avoid obstacles
+ You control a car and can move it up or down to avoid obstacles
 ---
-# There are currently coins you can get along the way to spend.
+ There are currently coins you can get along the way to spend.
 ---
-# You can customize your car for free, and soon for coins in the Avatar
+ You can customize your car for free, and soon for coins in the Avatar
 ---
-# There is a tutorial explaining the game's controls and aims.
+ There is a tutorial explaining the game's controls and aims.
 ---
-# Anyway, have fun!
+ Anyway, have fun!
 ---
-# POWERUPS are coming SOON!
+ POWERUPS are coming SOON!
