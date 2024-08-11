@@ -1,15 +1,29 @@
-# Down-Town-Drift
+<h1 align = "center">
+Down Town Drift
+</h1>
+
+<p align = 'center'>
+<img src= "https://i.postimg.cc/SK42297N/dtd-gif.gif" alt = "animated"/>
+</p>
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [About the Project](#about-the-project)
+3. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+4. [Future Plans](#future-plans)
+
 ---
- This game is an endless runner-style game.
----
- You control a car and can move it up or down to avoid obstacles
----
- There are currently coins you can get along the way to spend.
----
- You can customize your car for free, and soon for coins in the Avatar
----
- There is a tutorial explaining the game's controls and aims.
----
- Anyway, have fun!
----
- POWERUPS are coming SOON!
+## Overview
+
+## About the Project
+
+## Getting Started
+
+### Prerequisites
+
+### Installation
+
+## Future Plans
