@@ -64,17 +64,18 @@ tutorial_screen = False
 game_screen = False
 
 # colour variables
-purple = (221, 160, 221)
-black = (0, 0, 0)
-grey = (100, 100, 100)
-red = (140, 0, 0)
-blue = (16, 47, 87)
-green = (28, 77, 28)
-orange = (201, 59, 12)
-grey_for_car = (87, 87, 87)
-purple_for_car = (100, 13, 166)
-colour_of_tank = (61, 122, 61)
-current_colour = red
+class GameColours():
+    purple = (221, 160, 221)
+    black = (0, 0, 0)
+    grey = (100, 100, 100)
+    red = (140, 0, 0)
+    blue = (16, 47, 87)
+    green = (28, 77, 28)
+    orange = (201, 59, 12)
+    grey_for_car = (87, 87, 87)
+    purple_for_car = (100, 13, 166)
+    colour_of_tank = (61, 122, 61)
+    current_colour = red
 
 # Fonts and text
 my_font = pygame.font.Font(get_relative_dir('Font/BACKTO1982.TTF'), 32)
