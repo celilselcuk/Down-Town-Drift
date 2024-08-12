@@ -43,11 +43,15 @@ game_screen_channel = pygame.mixer.Channel(2)
 score = 0
 
 # difficulty variables
-basic = True
-easy = False
-medium = False
-hard = False
-extreme = False
+class GameDifficulty():
+    basic = 0
+    easy = 1
+    medium = 2
+    hard = 3
+    extreme = 4
+
+# initialising difficulty (will be declared later)
+difficulty: GameDifficulty
 
 # general variables
 next_page_arrow = pygame.image.load(get_relative_dir('Menu design/next page arrow.png'))
