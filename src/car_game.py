@@ -206,6 +206,8 @@ def update_highscore():
         with open(get_relative_dir('Data/highscore.txt'), 'r+') as file:
             file.write(str(high_score))
 
+high_score = 0
+
 def game_over():
     global high_score
 
