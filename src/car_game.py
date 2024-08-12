@@ -222,8 +222,8 @@ def game_over():
 def loading():
     global counter
     loading_message = my_font.render('Loading', False, (255, 255, 255))
-    pygame.draw.rect(screen, grey, pygame.Rect(195, 108, 220, 60))
-    pygame.draw.rect(screen, purple, pygame.Rect(195, 108, 220, 60), 3)
+    pygame.draw.rect(screen, GameColours.grey, pygame.Rect(195, 108, 220, 60))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(195, 108, 220, 60), 3)
     screen.blit(loading_message, (208, 118))
 
     current_sprite = sprites[int(counter)]
@@ -239,7 +239,7 @@ def loading():
 
 def fade_screen_game_over(width, height):
     fade_game_over = pygame.Surface((width, height))
-    fade_game_over.fill(black)
+    fade_game_over.fill(GameColours.black)
     for alpha in range(0, 300):
         fade_game_over.set_alpha(alpha)
         screen.blit(fade_game_over, (0, 0))
@@ -250,7 +250,7 @@ def fade_screen_game_over(width, height):
 
 def fade_screen_loading(width, height):
     fade_loading = pygame.Surface((width, height))
-    fade_loading.fill(black)
+    fade_loading.fill(GameColours.black)
     for alpha in range(0, 300):
         fade_loading.set_alpha(alpha)
         screen.blit(fade_loading, (0, 0))
@@ -262,17 +262,17 @@ def start_screen():
     global money_adder_counter
 
     money_adder_counter = 0
-    pygame.draw.rect(screen, black, pygame.Rect(90, 38, 423, 60))
-    pygame.draw.rect(screen, purple, pygame.Rect(90, 38, 423, 60), 3)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(90, 38, 423, 60))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(90, 38, 423, 60), 3)
     screen.blit(text_surface, (100, 50))
-    pygame.draw.rect(screen, black, pygame.Rect(90, 300, 435, 45))
-    pygame.draw.rect(screen, purple, pygame.Rect(90, 300, 435, 45), 3)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(90, 300, 435, 45))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(90, 300, 435, 45), 3)
     screen.blit(text_start, (100, 310))
-    pygame.draw.rect(screen, black, pygame.Rect(90, 500, 432, 45))
-    pygame.draw.rect(screen, purple, pygame.Rect(90, 500, 432, 45), 3)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(90, 500, 432, 45))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(90, 500, 432, 45), 3)
     screen.blit(text_tutorial, (100, 510))
-    pygame.draw.rect(screen, black, pygame.Rect(90, 400, 378, 45))
-    pygame.draw.rect(screen, purple, pygame.Rect(90, 400, 378, 45), 3)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(90, 400, 378, 45))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(90, 400, 378, 45), 3)
     screen.blit(text_avatar, (100, 410))
 
 
@@ -299,7 +299,7 @@ def game():
     global coins_gained
 
     screen.blit(game_map, (0, 0))
-    pygame.draw.rect(screen, black, pygame.Rect(535, 535, 60, 60))
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(535, 535, 60, 60))
     pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(535, 535, 60, 60), 3)
     screen.blit(small_coin_pic, (540, 540))
     money_text = my_font_start.render(f'{coins_gained}', False, (255, 255, 255))
@@ -307,7 +307,7 @@ def game():
     # HEALTH BAR #
     if HP == 350:
         pygame.draw.rect(screen, current_colour, pygame.Rect(20, 540, HP, 45))
-        pygame.draw.rect(screen, black, pygame.Rect(20, 540, 350, 45), 3)
+        pygame.draw.rect(screen, GameColours.black, pygame.Rect(20, 540, 350, 45), 3)
 
     user = pygame.Rect(car_x, car_y, 110, 110)
 
@@ -359,7 +359,7 @@ def game():
 
         if user.colliderect(obstacle0) or user.colliderect(obstacle1) or user.colliderect(obstacle2):
             pygame.draw.rect(screen, current_colour, pygame.Rect(20, 540, HP, 45))
-            pygame.draw.rect(screen, black, pygame.Rect(20, 540, 350, 45), 3)
+            pygame.draw.rect(screen, GameColours.black, pygame.Rect(20, 540, 350, 45), 3)
             if current_car == tank:
                 HP -= obstacle_speed / 6
             else:
@@ -383,30 +383,30 @@ def game():
             fade_screen_game_over(600, 600)
 
         pygame.draw.rect(screen, current_colour, pygame.Rect(20, 540, HP, 45))
-        pygame.draw.rect(screen, black, pygame.Rect(20, 540, 350, 45), 3)
+        pygame.draw.rect(screen, GameColours.black, pygame.Rect(20, 540, 350, 45), 3)
 
 
 def tutorial():
 
-    pygame.draw.rect(screen, black, pygame.Rect(187, 27, 240, 55))
-    pygame.draw.rect(screen, purple, pygame.Rect(187, 27, 240, 55), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(187, 27, 240, 55))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(187, 27, 240, 55), 4)
     screen.blit(tutorial_title, (195, 35))
 
-    pygame.draw.rect(screen, black, pygame.Rect(48, 30, 75, 40))
-    pygame.draw.rect(screen, purple, pygame.Rect(48, 30, 75, 40), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(48, 30, 75, 40))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(48, 30, 75, 40), 4)
     screen.blit(start_esc, (58, 38))
 
-    pygame.draw.rect(screen, grey, pygame.Rect(30, 130, 540, 430))
-    pygame.draw.rect(screen, purple, pygame.Rect(30, 130, 540, 430), 5)
+    pygame.draw.rect(screen, GameColours.grey, pygame.Rect(30, 130, 540, 430))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(30, 130, 540, 430), 5)
 
-    pygame.draw.line(screen, purple, (300, 130), (300, 559), 4)
+    pygame.draw.line(screen, GameColours.purple, (300, 130), (300, 559), 4)
 
-    pygame.draw.rect(screen, red, pygame.Rect(40, 140, 253, 200))
-    pygame.draw.rect(screen, black, pygame.Rect(40, 140, 253, 200), 4)
+    pygame.draw.rect(screen, GameColours.red, pygame.Rect(40, 140, 253, 200))
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(40, 140, 253, 200), 4)
     screen.blit(tutorial_text_1, (60, 170))
 
-    pygame.draw.rect(screen, green, pygame.Rect(40, 350, 253, 200))
-    pygame.draw.rect(screen, black, pygame.Rect(40, 350, 253, 200), 4)
+    pygame.draw.rect(screen, GameColours.green, pygame.Rect(40, 350, 253, 200))
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(40, 350, 253, 200), 4)
     screen.blit(tutorial_text_2, (60, 380))
 
     screen.blit(oil, (50, 225))
@@ -418,26 +418,26 @@ def tutorial():
 def avatar():
 
     # title
-    pygame.draw.rect(screen, black, pygame.Rect(190, 27, 202, 57))
-    pygame.draw.rect(screen, purple, pygame.Rect(190, 27, 202, 57), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(190, 27, 202, 57))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(190, 27, 202, 57), 4)
     screen.blit(avatar_title, (204, 37))
     # esc
-    pygame.draw.rect(screen, black, pygame.Rect(48, 30, 75, 40))
-    pygame.draw.rect(screen, purple, pygame.Rect(48, 30, 75, 40), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(48, 30, 75, 40))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(48, 30, 75, 40), 4)
     screen.blit(start_esc, (58, 38))
     # customise box
-    pygame.draw.rect(screen, grey, pygame.Rect(50, 250, 500, 290))
-    pygame.draw.rect(screen, purple, pygame.Rect(50, 250, 500, 290), 5)
+    pygame.draw.rect(screen, GameColours.grey, pygame.Rect(50, 250, 500, 290))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(50, 250, 500, 290), 5)
     # current car
-    pygame.draw.rect(screen, grey, pygame.Rect(200, 110, 180, 105))
-    pygame.draw.rect(screen, purple, pygame.Rect(200, 110, 180, 105), 4)
+    pygame.draw.rect(screen, GameColours.grey, pygame.Rect(200, 110, 180, 105))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(200, 110, 180, 105), 4)
     screen.blit(current_car, (228, 108))
     # next page arrow
-    pygame.draw.rect(screen, black, pygame.Rect(465, 18, 120, 83))
-    pygame.draw.rect(screen, purple, pygame.Rect(465, 18, 120, 83), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(465, 18, 120, 83))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(465, 18, 120, 83), 4)
     # money
-    pygame.draw.rect(screen, black, pygame.Rect(50, 130, 106, 55))
-    pygame.draw.rect(screen, purple, pygame.Rect(50, 130, 106, 55), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(50, 130, 106, 55))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(50, 130, 106, 55), 4)
     screen.blit(small_coin_pic, (40, 120))
     total_money_message = my_font_start.render(f' {final_money}', False, (255, 255, 255))
     screen.blit(total_money_message, (90, 145))
@@ -446,22 +446,22 @@ def avatar():
 def avatar_page_2():
 
     # title
-    pygame.draw.rect(screen, black, pygame.Rect(190, 27, 202, 57))
-    pygame.draw.rect(screen, purple, pygame.Rect(190, 27, 202, 57), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(190, 27, 202, 57))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(190, 27, 202, 57), 4)
     screen.blit(avatar_title, (204, 37))
     # go back arrow
-    pygame.draw.rect(screen, black, pygame.Rect(10, 18, 120, 83))
-    pygame.draw.rect(screen, purple, pygame.Rect(10, 18, 120, 83), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(10, 18, 120, 83))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(10, 18, 120, 83), 4)
     # current car
-    pygame.draw.rect(screen, grey, pygame.Rect(200, 110, 180, 105))
-    pygame.draw.rect(screen, purple, pygame.Rect(200, 110, 180, 105), 4)
+    pygame.draw.rect(screen, GameColours.grey, pygame.Rect(200, 110, 180, 105))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(200, 110, 180, 105), 4)
     screen.blit(current_car, (228, 108))
     # customise box
-    pygame.draw.rect(screen, grey, pygame.Rect(50, 250, 500, 290))
-    pygame.draw.rect(screen, purple, pygame.Rect(50, 250, 500, 290), 5)
+    pygame.draw.rect(screen, GameColours.grey, pygame.Rect(50, 250, 500, 290))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(50, 250, 500, 290), 5)
     # money
-    pygame.draw.rect(screen, black, pygame.Rect(50, 130, 106, 55))
-    pygame.draw.rect(screen, purple, pygame.Rect(50, 130, 106, 55), 4)
+    pygame.draw.rect(screen, GameColours.black, pygame.Rect(50, 130, 106, 55))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(50, 130, 106, 55), 4)
     screen.blit(small_coin_pic, (40, 120))
     total_money_message = my_font_start.render(f' {final_money}', False, (255, 255, 255))
     screen.blit(total_money_message, (90, 145))
@@ -578,23 +578,23 @@ while running:
     if avatar_screen:
         if red_car_button.draw():
             current_car = red_car
-            current_colour = red
+            current_colour = GameColours.red
 
         if blue_car_button.draw():
             current_car = blue_car
-            current_colour = blue
+            current_colour = GameColours.blue
         if green_car_button.draw():
             current_car = green_car
-            current_colour = green
+            current_colour = GameColours.green
         if orange_car_button.draw():
             current_car = orange_car
-            current_colour = orange
+            current_colour = GameColours.orange
         if purple_car_button.draw():
             current_car = purple_car
-            current_colour = purple_for_car
+            current_colour = GameColours.purple_for_car
         if grey_car_button.draw():
             current_car = grey_car
-            current_colour = grey_for_car
+            current_colour = GameColours.grey_for_car
         if next_page_button.draw():
             avatar_screen = False
             avatar_screen_two = True
@@ -604,7 +604,7 @@ while running:
         avatar_page_2()
         if tank_button.draw():
             current_car = tank
-            current_colour = colour_of_tank
+            current_colour = GameColours.colour_of_tank
 
         if go_back_button.draw():
             avatar_screen_two = False
