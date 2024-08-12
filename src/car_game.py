@@ -209,8 +209,6 @@ def update_highscore():
 high_score = 0
 
 def game_over():
-    global high_score
-
     update_highscore()
     #screen text   
     death_message = my_font.render('...You Died...', False, (255, 255, 255))
