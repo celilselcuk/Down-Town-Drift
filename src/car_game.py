@@ -537,33 +537,31 @@ while running:
         screen.blit(score_display, (435, 25))
         difficulty_title = my_font_start.render('Difficulty: ', False, (255, 255, 255))
         screen.blit(difficulty_title, (32, 25))
-        if basic or score == 0:
+
+        if difficulty == GameDifficulty.basic or score == 0:
             easy_title = my_font_start.render('Basic', False, (0, 0, 190))
             screen.blit(easy_title, (215, 25))
         if 15 <= score < 30:
-            basic = False
-            easy = True
-            if easy:
-                medium_title = my_font_start.render('Easy', False, (0, 255, 0))
-                screen.blit(medium_title, (215, 25))
+            difficulty = GameDifficulty.easy
+
+            medium_title = my_font_start.render('Easy', False, (0, 255, 0))
+            screen.blit(medium_title, (215, 25))
         if 30 <= score < 55:
-            easy = False
-            medium = True
-            if medium:
-                hard_title = my_font_start.render('Medium', False, (228, 155, 15))
-                screen.blit(hard_title, (215, 25))
+            difficulty = GameDifficulty.medium
+
+            hard_title = my_font_start.render('Medium', False, (228, 155, 15))
+            screen.blit(hard_title, (215, 25))
         if 55 <= score < 85:
-            medium = False
-            hard = True
-            if hard:
-                extreme_title = my_font_start.render('Hard', False, (255, 0, 0))
-                screen.blit(extreme_title, (215, 25))
+            difficulty = GameDifficulty.hard
+
+            extreme_title = my_font_start.render('Hard', False, (255, 0, 0))
+            screen.blit(extreme_title, (215, 25))
         if score > 85:
-            hard = False
-            extreme = True
-            if extreme:
-                extreme_title = my_font_start.render('Extreme', False, (180, 0, 0))
-                screen.blit(extreme_title, (215, 25))
+            difficulty = GameDifficulty.extreme
+
+            
+            extreme_title = my_font_start.render('Extreme', False, (180, 0, 0))
+            screen.blit(extreme_title, (215, 25))
 
         # ~~~DRAWING PLAYER + ANIMATIONS FOR CARS~~~ #
         if current_car == tank:
@@ -656,7 +654,7 @@ while running:
                     tutorial_screen = False
                     avatar_screen = False
                     game_screen = True
-                    basic = True
+                    difficulty = GameDifficulty.basic
 
             if game_screen:
                 if event.key == pygame.K_UP or event.key == pygame.K_w:
