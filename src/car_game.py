@@ -39,9 +39,6 @@ start_screen_channel = pygame.mixer.Channel(0)
 avatar_tutorial_screen_channel = pygame.mixer.Channel(1)
 game_screen_channel = pygame.mixer.Channel(2)
 
-# score 
-score = 0
-
 # difficulty variables
 class GameDifficulty():
     basic = 0
@@ -56,12 +53,10 @@ difficulty: GameDifficulty
 # general variables
 next_page_arrow = pygame.image.load(get_relative_dir('Menu design/next page arrow.png'))
 go_back_arrow = pygame.image.load(get_relative_dir('Menu design/go back arrow.png'))
-no_collide = True
-game_start_screen = True
 avatar_screen = False
 avatar_screen_two = False
 tutorial_screen = False
-game_screen = False
+
 
 # colour variables
 class GameColours():
@@ -124,15 +119,10 @@ orange_car = pygame.image.load(get_relative_dir('Cars/orange car.png'))
 purple_car = pygame.image.load(get_relative_dir('Cars/purple car.png'))
 grey_car = pygame.image.load(get_relative_dir('Cars/grey car.png'))
 tank = pygame.image.load(get_relative_dir('Cars/2s3m.png'))
-current_car = red_car
 car_x = 10
 car_y = 245
-HP = 350
-car_collide = False
 
 # shop variables:
-total_money = 0
-coins_gained = 0
 small_coin_pic = pygame.image.load(get_relative_dir("Menu design/small_coin.png"))
 
 # obstacle variables
@@ -141,19 +131,27 @@ cone = pygame.image.load(get_relative_dir('Obstacles/cone.png'))
 barrel = pygame.image.load(get_relative_dir('Obstacles/barrel.png'))
 coin_pic = pygame.image.load(get_relative_dir('Obstacles/coin.png'))
 
-obstacle_speed = 2.4
-
-obstacle0_x = 500
-obstacle1_x = 750
-obstacle2_x = 1150
-obstacle0_y = 100
-obstacle1_y = 250
-obstacle2_y = 400
-coin_x = 3000
-coin_y = 275
-coin_hit = False
-coin_on_map = False
-
+class GameState():
+    total_money = 0
+    coin_x = 3000
+    coin_y = 275
+    current_car = red_car
+    car_collide = False
+    HP = 350
+    game_start_screen = True
+    game_screen = False
+    no_collide = True
+    obstacle0_x = 500
+    obstacle1_x = 750
+    obstacle2_x = 1150
+    obstacle0_y = 100
+    obstacle1_y = 250
+    obstacle2_y = 400
+    obstacle_speed = 2.4
+    score = 0
+    coin_hit = False
+    coin_on_map = False
+    coins_gained = 0
 
 class Button:
     def __init__(self, x, y, image):
@@ -182,7 +180,6 @@ class Button:
         screen.blit(self.image, (self.rect.x, self.rect.y))
         return action
 
-
 tank_button = Button(80, 260, tank)
 red_car_button = Button(80, 260, red_car)
 blue_car_button = Button(240, 260, blue_car)
@@ -201,23 +198,22 @@ def update_highscore():
         except ValueError:
             high_score = 0
 
-    if high_score < score:
-        high_score = score
+    if high_score < GameState.score:
+        high_score = GameState.score
         with open(get_relative_dir('Data/highscore.txt'), 'r+') as file:
             file.write(str(high_score))
 
-high_score = 0
+    return high_score
 
 def game_over():
-    update_highscore()
+    high_score = update_highscore()
     #screen text   
     death_message = my_font.render('...You Died...', False, (255, 255, 255))
     high_score_message = my_font.render(f'High score: {str(high_score)}', False, (255, 255, 255))
-    money_gained_message = my_font.render(f'Money gained: {coins_gained}', False, (255, 255, 255))
+    money_gained_message = my_font.render(f'Money gained: {GameState.coins_gained}', False, (255, 255, 255))
     screen.blit(death_message, (50, 50))
     screen.blit(high_score_message, (50, 150))
     screen.blit(money_gained_message, (50, 250))
-
 
 def loading():
     global counter
@@ -257,7 +253,6 @@ def fade_screen_loading(width, height):
         loading()
         pygame.display.update()
 
-
 def start_screen():
     global money_adder_counter
 
@@ -275,116 +270,94 @@ def start_screen():
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(90, 400, 378, 45), 3)
     screen.blit(text_avatar, (100, 410))
 
-
 def game():
-    global total_money
-    global coin_x
-    global coin_y
-    global current_car
-    global car_collide
-    global HP
-    global game_start_screen
-    global game_screen
-    global no_collide
-    global obstacle0_x
-    global obstacle1_x
-    global obstacle2_x
-    global obstacle0_y
-    global obstacle1_y
-    global obstacle2_y
-    global obstacle_speed
-    global score
-    global coin_hit
-    global coin_on_map
-    global coins_gained
 
     screen.blit(game_map, (0, 0))
     pygame.draw.rect(screen, GameColours.black, pygame.Rect(535, 535, 60, 60))
     pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(535, 535, 60, 60), 3)
     screen.blit(small_coin_pic, (540, 540))
-    money_text = my_font_start.render(f'{coins_gained}', False, (255, 255, 255))
+    money_text = my_font_start.render(f'{GameState.coins_gained}', False, (255, 255, 255))
     screen.blit(money_text, (548, 540))
     # HEALTH BAR #
-    if HP == 350:
-        pygame.draw.rect(screen, current_colour, pygame.Rect(20, 540, HP, 45))
+    if GameState.HP == 350:
+        pygame.draw.rect(screen, GameColours.current_colour, pygame.Rect(20, 540, GameState.HP, 45))
         pygame.draw.rect(screen, GameColours.black, pygame.Rect(20, 540, 350, 45), 3)
 
     user = pygame.Rect(car_x, car_y, 110, 110)
 
-    coin = pygame.Rect(coin_x, coin_y, 50, 50)
-    obstacle0 = pygame.Rect(obstacle0_x, obstacle0_y, 50, 50)
-    obstacle1 = pygame.Rect(obstacle1_x, obstacle1_y, 50, 50)
-    obstacle2 = pygame.Rect(obstacle2_x, obstacle2_y, 50, 50)
-    screen.blit(oil, (obstacle0_x, obstacle0_y))
-    screen.blit(cone, (obstacle1_x, obstacle1_y))
-    screen.blit(barrel, (obstacle2_x, obstacle2_y))
+    coin = pygame.Rect(GameState.coin_x, GameState.coin_y, 50, 50)
+    obstacle0 = pygame.Rect(GameState.obstacle0_x, GameState.obstacle0_y, 50, 50)
+    obstacle1 = pygame.Rect(GameState.obstacle1_x, GameState.obstacle1_y, 50, 50)
+    obstacle2 = pygame.Rect(GameState.obstacle2_x, GameState.obstacle2_y, 50, 50)
+    screen.blit(oil, (GameState.obstacle0_x, GameState.obstacle0_y))
+    screen.blit(cone, (GameState.obstacle1_x, GameState.obstacle1_y))
+    screen.blit(barrel, (GameState.obstacle2_x, GameState.obstacle2_y))
 
-    if no_collide:
-        obstacle0_x -= obstacle_speed
-        obstacle1_x -= obstacle_speed
-        obstacle2_x -= obstacle_speed
+    if GameState.no_collide:
+        GameState.obstacle0_x -= GameState.obstacle_speed
+        GameState.obstacle1_x -= GameState.obstacle_speed
+        GameState.obstacle2_x -= GameState.obstacle_speed
 
-        if obstacle0_x < -70:
-            obstacle0_x = random.randrange(1200, 2000, 400)
-            obstacle0_y = random.randrange(125, 525, 150)
-            score += 1
-            if score >= 10:
-                obstacle_speed += 0.1
+        if GameState.obstacle0_x < -70:
+            GameState.obstacle0_x = random.randrange(1200, 2000, 400)
+            GameState.obstacle0_y = random.randrange(125, 525, 150)
+            GameState.score += 1
+            if GameState.score >= 10:
+                GameState.obstacle_speed += 0.1
 
-        if obstacle1_x < -70:
-            obstacle1_x = obstacle0_x + 300
-            obstacle1_y = random.randrange(125, 525, 150)
-            score += 1
-            if score >= 10:
-                obstacle_speed += 0.1
+        if GameState.obstacle1_x < -70:
+            GameState.obstacle1_x = GameState.obstacle0_x + 300
+            GameState.obstacle1_y = random.randrange(125, 525, 150)
+            GameState.score += 1
+            if GameState.score >= 10:
+                GameState.obstacle_speed += 0.1
 
-        if obstacle2_x < -70:
-            obstacle2_x = obstacle1_x + 600
-            obstacle2_y = random.randrange(125, 525, 150)
-            score += 1
-            if score >= 10:
-                obstacle_speed += 0.1
+        if GameState.obstacle2_x < -70:
+            GameState.obstacle2_x = GameState.obstacle1_x + 600
+            GameState.obstacle2_y = random.randrange(125, 525, 150)
+            GameState.score += 1
+            if GameState.score >= 10:
+                GameState.obstacle_speed += 0.1
 
-        if score % 10 == 0 or coin_on_map:
+        if GameState.score % 10 == 0 or GameState.coin_on_map:
             if coin.colliderect(obstacle0) or coin.colliderect(obstacle1) or coin.colliderect(obstacle2):
-                coin_x = coin_x + 500
-            screen.blit(coin_pic, (coin_x, coin_y))
-            coin_x -= obstacle_speed
-            coin_on_map = True
+                GameState.coin_x = GameState.coin_x + 500
+            screen.blit(coin_pic, (GameState.coin_x, GameState.coin_y))
+            GameState.coin_x -= GameState.obstacle_speed
+            GameState.coin_on_map = True
 
-        if coin_x < -70:
-            coin_x = obstacle2_x + 900
-            coin_y = random.randrange(125, 525, 150)
-            coin_on_map = False
+        if GameState.coin_x < -70:
+            GameState.coin_x = GameState.obstacle2_x + 900
+            GameState.coin_y = random.randrange(125, 525, 150)
+            GameState.coin_on_map = False
 
         if user.colliderect(obstacle0) or user.colliderect(obstacle1) or user.colliderect(obstacle2):
-            pygame.draw.rect(screen, current_colour, pygame.Rect(20, 540, HP, 45))
+            pygame.draw.rect(screen, GameColours.current_colour, pygame.Rect(20, 540, GameState.HP, 45))
             pygame.draw.rect(screen, GameColours.black, pygame.Rect(20, 540, 350, 45), 3)
-            if current_car == tank:
-                HP -= obstacle_speed / 6
+            if GameState.current_car == tank:
+                GameState.HP -= GameState.obstacle_speed / 6
             else:
-                HP -= obstacle_speed / 0.6
+                GameState.HP -= GameState.obstacle_speed / 0.6
 
-        if user.colliderect(coin) and not coin_hit:
-            total_money += 1
-            coins_gained += 1
-            coin_x = obstacle2_x + 900
-            coin_y = random.randrange(125, 525, 150)
-            coin_hit = True
-            coin_on_map = False
+        if user.colliderect(coin) and not GameState.coin_hit:
+            GameState.total_money += 1
+            GameState.coins_gained += 1
+            GameState.coin_x = GameState.obstacle2_x + 900
+            GameState.coin_y = random.randrange(125, 525, 150)
+            GameState.coin_hit = True
+            GameState.coin_on_map = False
 
         if not user.colliderect(coin):
-            coin_hit = False
+            GameState.coin_hit = False
 
-        if HP <= 0:
-            no_collide = False
-            game_screen = False
-            game_start_screen = True
+        if GameState.HP <= 0:
+            GameState.no_collide = False
+            GameState.game_screen = False
+            GameState.game_start_screen = True
             fade_screen_game_over(600, 600)
 
-        pygame.draw.rect(screen, current_colour, pygame.Rect(20, 540, HP, 45))
+        pygame.draw.rect(screen, GameColours.current_colour, pygame.Rect(20, 540, GameState.HP, 45))
         pygame.draw.rect(screen, GameColours.black, pygame.Rect(20, 540, 350, 45), 3)
-
 
 def tutorial():
 
@@ -414,7 +387,6 @@ def tutorial():
     screen.blit(barrel, (210, 225))
     screen.blit(coin_pic, (130, 435))
 
-
 def avatar():
 
     # title
@@ -431,7 +403,7 @@ def avatar():
     # current car
     pygame.draw.rect(screen, GameColours.grey, pygame.Rect(200, 110, 180, 105))
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(200, 110, 180, 105), 4)
-    screen.blit(current_car, (228, 108))
+    screen.blit(GameState.current_car, (228, 108))
     # next page arrow
     pygame.draw.rect(screen, GameColours.black, pygame.Rect(465, 18, 120, 83))
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(465, 18, 120, 83), 4)
@@ -441,7 +413,6 @@ def avatar():
     screen.blit(small_coin_pic, (40, 120))
     total_money_message = my_font_start.render(f' {final_money}', False, (255, 255, 255))
     screen.blit(total_money_message, (90, 145))
-
 
 def avatar_page_2():
 
@@ -455,7 +426,7 @@ def avatar_page_2():
     # current car
     pygame.draw.rect(screen, GameColours.grey, pygame.Rect(200, 110, 180, 105))
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(200, 110, 180, 105), 4)
-    screen.blit(current_car, (228, 108))
+    screen.blit(GameState.current_car, (228, 108))
     # customise box
     pygame.draw.rect(screen, GameColours.grey, pygame.Rect(50, 250, 500, 290))
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(50, 250, 500, 290), 5)
@@ -467,7 +438,7 @@ def avatar_page_2():
     screen.blit(total_money_message, (90, 145))
 
 def update_money():
-    global total_money, final_money, coins_gained
+    global final_money
     
     with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
         try:
@@ -476,17 +447,17 @@ def update_money():
             final_money = 0
 
     with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
-        final_money += total_money
+        final_money += GameState.total_money
         file.write(str(final_money))
 
-    total_money = 0
+    GameState.total_money = 0
 
 running = True
 while running:
 
     screen.blit(background, (0, 0))
 
-    if game_start_screen:
+    if GameState.game_start_screen:
         update_money()
         update_highscore()
         start_screen()
@@ -497,7 +468,6 @@ while running:
            called_avatar_tutorial = False
            called_game = False
            called_start = True
-
 
     if avatar_screen:
         update_money()
@@ -521,7 +491,7 @@ while running:
            called_game = False
            called_start = False
 
-    if game_screen:
+    if GameState.game_screen:
         update_money()
         update_highscore()
         game()
@@ -533,30 +503,30 @@ while running:
            called_game = True
            called_start = False
 
-        score_display = my_font_start.render(f'Score: {score}', False, (255, 255, 255))
+        score_display = my_font_start.render(f'Score: {GameState.score}', False, (255, 255, 255))
         screen.blit(score_display, (435, 25))
         difficulty_title = my_font_start.render('Difficulty: ', False, (255, 255, 255))
         screen.blit(difficulty_title, (32, 25))
 
-        if difficulty == GameDifficulty.basic or score == 0:
+        if difficulty == GameDifficulty.basic or GameState.score == 0:
             easy_title = my_font_start.render('Basic', False, (0, 0, 190))
             screen.blit(easy_title, (215, 25))
-        if 15 <= score < 30:
+        if 15 <= GameState.score < 30:
             difficulty = GameDifficulty.easy
 
             medium_title = my_font_start.render('Easy', False, (0, 255, 0))
             screen.blit(medium_title, (215, 25))
-        if 30 <= score < 55:
+        if 30 <= GameState.score < 55:
             difficulty = GameDifficulty.medium
 
             hard_title = my_font_start.render('Medium', False, (228, 155, 15))
             screen.blit(hard_title, (215, 25))
-        if 55 <= score < 85:
+        if 55 <= GameState.score < 85:
             difficulty = GameDifficulty.hard
 
             extreme_title = my_font_start.render('Hard', False, (255, 0, 0))
             screen.blit(extreme_title, (215, 25))
-        if score > 85:
+        if GameState.score > 85:
             difficulty = GameDifficulty.extreme
 
             
@@ -564,35 +534,35 @@ while running:
             screen.blit(extreme_title, (215, 25))
 
         # ~~~DRAWING PLAYER + ANIMATIONS FOR CARS~~~ #
-        if current_car == tank:
+        if GameState.current_car == tank:
             current_tank = tank_sprites[int(tank_counter)]
             tank_counter += 0.07
             if tank_counter >= len(tank_sprites):
                 tank_counter = 0
             screen.blit(current_tank, (car_x, car_y))
         else:
-            screen.blit(current_car, (car_x, car_y))
+            screen.blit(GameState.current_car, (car_x, car_y))
 
     if avatar_screen:
         if red_car_button.draw():
-            current_car = red_car
-            current_colour = GameColours.red
+            GameState.current_car = red_car
+            GameColours.current_colour = GameColours.red
 
         if blue_car_button.draw():
-            current_car = blue_car
-            current_colour = GameColours.blue
+            GameState.current_car = blue_car
+            GameColours.current_colour = GameColours.blue
         if green_car_button.draw():
-            current_car = green_car
-            current_colour = GameColours.green
+            GameState.current_car = green_car
+            GameColours.current_colour = GameColours.green
         if orange_car_button.draw():
-            current_car = orange_car
-            current_colour = GameColours.orange
+            GameState.current_car = orange_car
+            GameColours.current_colour = GameColours.orange
         if purple_car_button.draw():
-            current_car = purple_car
-            current_colour = GameColours.purple_for_car
+            GameState.current_car = purple_car
+            GameColours.current_colour = GameColours.purple_for_car
         if grey_car_button.draw():
-            current_car = grey_car
-            current_colour = GameColours.grey_for_car
+            GameState.current_car = grey_car
+            GameColours.current_colour = GameColours.grey_for_car
         if next_page_button.draw():
             avatar_screen = False
             avatar_screen_two = True
@@ -601,8 +571,8 @@ while running:
         update_money()
         avatar_page_2()
         if tank_button.draw():
-            current_car = tank
-            current_colour = GameColours.colour_of_tank
+            GameState.current_car = tank
+            GameColours.current_colour = GameColours.colour_of_tank
 
         if go_back_button.draw():
             avatar_screen_two = False
@@ -611,52 +581,52 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             # avatar screen
-            if game_start_screen:
+            if GameState.game_start_screen:
                 if event.key == pygame.K_a:
                     button_sound.play()
                     fade_screen_loading(600, 600)
-                    game_start_screen = False
+                    GameState.game_start_screen = False
                     tutorial_screen = False
-                    game_screen = False
+                    GameState.game_screen = False
                     avatar_screen = True
                 # tutorial screen
-            if game_start_screen:
+            if GameState.game_start_screen:
                 if event.key == pygame.K_t:
                     button_sound.play()
                     fade_screen_loading(600, 600)
-                    game_start_screen = False
-                    game_screen = False
+                    GameState.game_start_screen = False
+                    GameState.game_screen = False
                     avatar_screen = False
                     tutorial_screen = True
                 # game screen
-            if game_start_screen:
+            if GameState.game_start_screen:
                 if event.key == pygame.K_SPACE:
                     button_sound.play()
                     fade_screen_loading(600, 600)
-                    car_x = 10
-                    car_y = 245
-                    coin_x = 3000
-                    coin_y = 275
-                    coins_gained = 0
-                    coin_hit = False
-                    coin_on_map = False
-                    obstacle0_x = 500
-                    obstacle1_x = 750
-                    obstacle2_x = 1150
-                    obstacle0_y = 125
-                    obstacle1_y = 275
-                    obstacle2_y = 425
-                    obstacle_speed = 2.4
-                    score = 0
-                    HP = 350
-                    no_collide = True
-                    game_start_screen = False
+                    GameState.car_x = 10
+                    GameState.car_y = 245
+                    GameState.coin_x = 3000
+                    GameState.coin_y = 275
+                    GameState.coins_gained = 0
+                    GameState.coin_hit = False
+                    GameState.coin_on_map = False
+                    GameState.obstacle0_x = 500
+                    GameState.obstacle1_x = 750
+                    GameState.obstacle2_x = 1150
+                    GameState.obstacle0_y = 125
+                    GameState.obstacle1_y = 275
+                    GameState.obstacle2_y = 425
+                    GameState.obstacle_speed = 2.4
+                    GameState.score = 0
+                    GameState.HP = 350
+                    GameState.no_collide = True
+                    GameState.game_start_screen = False
                     tutorial_screen = False
                     avatar_screen = False
-                    game_screen = True
+                    GameState.game_screen = True
                     difficulty = GameDifficulty.basic
 
-            if game_screen:
+            if GameState.game_screen:
                 if event.key == pygame.K_UP or event.key == pygame.K_w:
                     if car_y > 0:
                         car_y -= 150
@@ -671,7 +641,7 @@ while running:
                         car_y -= 150
 
         # go back to starting screen
-        if not game_start_screen:
+        if not GameState.game_start_screen:
             if event.type == pygame.KEYDOWN:
                 if not avatar_screen_two:
                     if event.key == pygame.K_ESCAPE:
@@ -679,8 +649,8 @@ while running:
                         tutorial_screen = False
                         avatar_screen = False
                         avatar_screen_two = False
-                        game_screen = False
-                        game_start_screen = True
+                        GameState.game_screen = False
+                        GameState.game_start_screen = True
 
         if event.type == pygame.QUIT:
             running = False
