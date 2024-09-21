@@ -124,6 +124,9 @@ car_y = 245
 
 # shop variables:
 small_coin_pic = pygame.image.load(get_relative_dir("Menu design/small_coin.png"))
+tank_purchase = pygame.image.load(get_relative_dir('Menu design/tank-req.png'))
+list_of_purchases = []
+unknown = pygame.image.load(get_relative_dir("Menu design/unkown.png"))
 
 # obstacle variables
 oil = pygame.image.load(get_relative_dir('Obstacles/oil leak.png'))
@@ -189,6 +192,7 @@ purple_car_button = Button(240, 400, purple_car)
 grey_car_button = Button(400, 400, grey_car)
 next_page_button = Button(480, 9, next_page_arrow)
 go_back_button = Button(15, 5, go_back_arrow)
+tank_buy_button = Button(53,251, tank_purchase)
 
 def update_highscore():
 
@@ -404,6 +408,10 @@ def avatar():
     pygame.draw.rect(screen, GameColours.grey, pygame.Rect(200, 110, 180, 105))
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(200, 110, 180, 105), 4)
     screen.blit(GameState.current_car, (228, 108))
+    # box dividers
+    pygame.draw.line(screen,GameColours.purple, (50,395), (545, 395), 5) # horizontal
+    pygame.draw.line(screen, GameColours.purple, (215,250),(215,538),5) #vertical
+    pygame.draw.line(screen, GameColours.purple, (380,250),(380,538),5) #vertical
     # next page arrow
     pygame.draw.rect(screen, GameColours.black, pygame.Rect(465, 18, 120, 83))
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(465, 18, 120, 83), 4)
@@ -428,8 +436,18 @@ def avatar_page_2():
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(200, 110, 180, 105), 4)
     screen.blit(GameState.current_car, (228, 108))
     # customise box
-    pygame.draw.rect(screen, GameColours.grey, pygame.Rect(50, 250, 500, 290))
-    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(50, 250, 500, 290), 5)
+    pygame.draw.rect(screen, GameColours.grey, pygame.Rect(50, 247, 500, 298))
+    pygame.draw.rect(screen, GameColours.purple, pygame.Rect(50, 247, 500, 298), 5)
+    # box dividers
+    pygame.draw.line(screen,GameColours.purple, (50,395), (545, 395), 5) # horizontal
+    pygame.draw.line(screen, GameColours.purple, (220,250),(220,538),5) #vertical 1
+    pygame.draw.line(screen, GameColours.purple, (380,250),(380,538),5) #vertical 2
+    # unknowns
+    screen.blit(unknown, (218, 251))
+    screen.blit(unknown, (380, 251))
+    screen.blit(unknown, (53, 396))
+    screen.blit(unknown, (218, 396))
+    screen.blit(unknown, (380, 396))
     # money
     pygame.draw.rect(screen, GameColours.black, pygame.Rect(50, 130, 106, 55))
     pygame.draw.rect(screen, GameColours.purple, pygame.Rect(50, 130, 106, 55), 4)
@@ -451,6 +469,26 @@ def update_money():
         file.write(str(final_money))
 
     GameState.total_money = 0
+
+def check_bought(purchases):
+    with open(get_relative_dir('Data/car_unlocks.txt'), 'r+') as file:
+        for i, lines in enumerate(file):
+            if i < 6:
+                purchases.append(str(lines.rstrip()))
+
+def update_bought(purchases, pos):
+    change_to = 'True'
+    purchases[pos] = change_to
+    with open(get_relative_dir('Data/car_unlocks.txt'), 'r+') as file:
+        for i, lines in enumerate(purchases):
+            if i < 6:
+                file.write(str(lines) + '\n')
+
+def deduct_money(cost):
+    global final_money
+    with open(get_relative_dir('Data/user_money.txt'), 'r+') as file:
+        final_money -= 30
+        file.write(str(final_money))
 
 running = True
 while running:
@@ -570,9 +608,18 @@ while running:
     if avatar_screen_two:
         update_money()
         avatar_page_2()
-        if tank_button.draw():
-            GameState.current_car = tank
-            GameColours.current_colour = GameColours.colour_of_tank
+        check_bought(list_of_purchases)
+        # purchase check for the TANK 
+        if list_of_purchases[0] == 'False':
+            if tank_buy_button.draw():
+                if final_money >= 30:
+                    deduct_money(30)
+                    update_bought(list_of_purchases,0)        
+        if list_of_purchases[0] == 'True':
+            pygame.draw.rect(screen, GameColours.grey, pygame.Rect(55, 255, 160, 135))
+            if tank_button.draw():
+                        GameState.current_car = tank
+                        GameColours.current_colour = GameColours.colour_of_tank
 
         if go_back_button.draw():
             avatar_screen_two = False
