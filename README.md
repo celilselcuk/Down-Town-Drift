@@ -67,4 +67,4 @@ For this game, you will need PyGame installed. Details regarding the version wil
 <!-- Future Plans -->
 <h2 id="future-plans"> :crystal_ball: Future Plans</h2>
 
-We are hoping to develop the game by adding power-ups, new map and car designs. Also considering adding some sort of neural network that can play as well.
+We are hoping to develop the game by adding power-ups, new map and car designs.
